@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
     - uses: actions/checkout@v3
     - uses: azure/login@v1                            # Azure login required to add a temporary firewall rule
@@ -11,5 +11,5 @@ jobs:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
     - uses: azure/sql-action@v2.2.1
       with:        
-        connection-string: ${{ secrets.AZURE_SQL_CONNECTION_STRING }}
+        connection-string: ${{ variables.AZURE_CONNECTIONSTRING }}
         path: './sqlscripts/*.sql'
