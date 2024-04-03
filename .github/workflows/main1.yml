@@ -1,0 +1,27 @@
+# .github/workflows/sql-deploy.yml
+name : azure_key_vault
+on:
+  push:
+      branches:
+          -dev
+      paths:
+        -
+
+  env:
+    subscriptionid: 139df070-026b-4425-9393-3477789dc47a
+    resourceGroupName: absdevrgp001
+    keyVaultName: absdevarmkeyci001
+    # serverName: 
+    # dbName:
+    # sqlUser:
+    # scriptDirectory:
+  
+  #Get Secrets from Key Vault
+      - id: getSecrets
+        name: Get Key Vault Secrets
+        uses: Azure/get-keyvault-secrets@v1
+        with: 
+          keyvault: ${{ dev.absdevarmkeyci001 }}
+          secrets: 'cs--sqlserver--jobmanager'
+      - name: Execute script
+        uses: Azure/powershell@v1
